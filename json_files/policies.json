@@ -1,0 +1,6 @@
+{
+    "export_document_slice1.pdf": "(CUSTOMER1@AUTH1 or CGI@AUTH2)",
+    "export_document_slice2.pdf": "(CUSTOMER1@AUTH1 or CGI@AUTH2)",
+    "export_document_slice3.pdf": "(BANK@AUTH4 or CGI@AUTH2)",
+    "export_document_slice4.pdf": "(CUSTOMER1@AUTH1 or BANK@AUTH4)"
+}
