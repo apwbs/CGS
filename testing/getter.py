@@ -8,7 +8,7 @@ from web3 import Web3
 w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
 
 # Load contract ABI
-with open("../blockchain/build/contracts/MARTSIAEth.json") as f:
+with open("../blockchain/build/contracts/CGSContract.json") as f:
     abi = json.load(f)["abi"]
 
 # Contract setup
