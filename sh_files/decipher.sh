@@ -96,7 +96,6 @@ if ! echo "$ipfs_link" | grep -Eq '^(Qm|bafy)[1-9A-HJ-NP-Za-km-z]{44,}$'; then
     exit 1
 fi
 
-
 # Count the number of slices in the retrieved IPFS object
 count_of_slices=$(ipfs cat "$ipfs_link" | python3 -c "import sys, json; data = sys.stdin.read(); print(len(json.loads(data).get('header', [])))")
 

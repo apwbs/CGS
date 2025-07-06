@@ -1,5 +1,5 @@
-var MARTSIAEth = artifacts.require("MARTSIAEth");
+var CGSContract = artifacts.require("CGSContract");
 
 module.exports = function(deployer) {
-    deployer.deploy(MARTSIAEth);
+    deployer.deploy(CGSContract);
 };

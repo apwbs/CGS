@@ -2,12 +2,12 @@
 pragma solidity >= 0.5.0 < 0.9.0;
 
 /**
- * @title MARTSIAEth
+ * @title CGSContract
  * @dev Smart contract for managing initialization operations, loan applications, and guarantee payments
  * This contract implements a multi-authority attribute-based encryption system
  * combined with a loan application and guarantee payment workflow
  */
-contract MARTSIAEth {
+contract CGSContract {
 
   // ============================================================================
   // DATA STRUCTURES

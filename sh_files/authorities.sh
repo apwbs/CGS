@@ -4,9 +4,9 @@
 run_commands() {
     local authority=$1
     gnome-terminal -- bash -c "\
-        docker exec -it martsia_ethereum_container bash -c ' \
+        docker exec -it cgs_container bash -c ' \
             sleep 0.3 && \
-            cd MARTSIA-Demo/sh_files && \
+            cd CGS/sh_files && \
             sleep 0.3 && \
             sh old/authority.sh --authority $authority; \
             sleep 10 && \
