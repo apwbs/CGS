@@ -2,16 +2,16 @@ import pandas as pd
 
 # Blockchain pricing data from the image (token price in EUR, gas price in GWEI)
 blockchain_data = {
-    "Ethereum": {"token": "ETH", "price_eur": 2226.55, "gas_price_gwei": 3},
-    "Arbitrum_One": {"token": "ETH", "price_eur": 2226.55, "gas_price_gwei": 0.1},
-    "Optimism": {"token": "ETH", "price_eur": 2226.55, "gas_price_gwei": 0.1},
-    "Binance_Smart_Chain": {"token": "BNB", "price_eur": 563.19, "gas_price_gwei": 0.1},
-    "Avalanche": {"token": "AVAX", "price_eur": 16, "gas_price_gwei": 1},
-    "Polygon": {"token": "MATIC", "price_eur": 0.161765, "gas_price_gwei": 31},
-    "Gnosis": {"token": "XDAI", "price_eur": 0.853378, "gas_price_gwei": 0.1},
-    "Celo": {"token": "CELO", "price_eur": 0.241633, "gas_price_gwei": 1},
-    "Fantom": {"token": "FTM", "price_eur": 0.284527, "gas_price_gwei": 1},
-    "Harmony": {"token": "ONE", "price_eur": 0.00895701, "gas_price_gwei": 120}
+    "Ethereum_eur": {"token": "ETH", "price_eur": 2226.55, "gas_price_gwei": 3},
+    "Arbitrum_One_eur": {"token": "ETH", "price_eur": 2226.55, "gas_price_gwei": 0.1},
+    "Optimism_eur": {"token": "ETH", "price_eur": 2226.55, "gas_price_gwei": 0.1},
+    "Binance_Smart_Chain_eur": {"token": "BNB", "price_eur": 563.19, "gas_price_gwei": 0.1},
+    "Avalanche_eur": {"token": "AVAX", "price_eur": 16, "gas_price_gwei": 1},
+    "Polygon_eur": {"token": "MATIC", "price_eur": 0.161765, "gas_price_gwei": 31},
+    "Gnosis_eur": {"token": "XDAI", "price_eur": 0.853378, "gas_price_gwei": 0.1},
+    "Celo_eur": {"token": "CELO", "price_eur": 0.241633, "gas_price_gwei": 1},
+    "Fantom_eur": {"token": "FTM", "price_eur": 0.284527, "gas_price_gwei": 1},
+    "Harmony_eur": {"token": "ONE", "price_eur": 0.00895701, "gas_price_gwei": 120}
 }
 
 # Load the CSV data from the user (as a list of dicts for demonstration)
