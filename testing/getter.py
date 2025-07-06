@@ -30,8 +30,8 @@ with open(env_file_path) as env_file:
 output_file = "transactions_decoded.csv"
 with open(output_file, mode='w', newline='') as csvfile:
     fieldnames = [
-        "block_number", "tx_hash", "from", "sender_name", "to", "value_ether",
-        "gas", "gas_price_wei", "gas_used", "function_name"
+        "tx_block_number", "tx_hash", "tx_from", "sender_name", "tx_to", "tx_value_ether",
+        "tx_gas", "tx_gas_price_wei", "tx_gas_used", "function_name"
     ]
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
@@ -67,15 +67,15 @@ with open(output_file, mode='w', newline='') as csvfile:
                 print(f"Block {block_number} | Tx: {tx.hash.hex()} | From: {sender_name} | Function: {func_name}")
 
                 writer.writerow({
-                    "block_number": block_number,
+                    "tx_block_number": block_number,
                     "tx_hash": tx.hash.hex(),
-                    "from": tx["from"],
+                    "tx_from": tx["from"],
                     "sender_name": sender_name,
-                    "to": tx["to"],
-                    "value_ether": w3.fromWei(tx["value"], "ether"),
-                    "gas": tx["gas"],
-                    "gas_price_wei": tx["gasPrice"],
-                    "gas_used": tx_receipt.gasUsed,
+                    "tx_to": tx["to"],
+                    "tx_value_ether": w3.fromWei(tx["value"], "ether"),
+                    "tx_gas": tx["gas"],
+                    "tx_gas_price_wei": tx["gasPrice"],
+                    "tx_gas_used": tx_receipt.gasUsed,
                     "function_name": func_name,
                 })
 
