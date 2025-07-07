@@ -15,6 +15,18 @@ with open("../blockchain/build/contracts/CGSContract.json") as f:
 contract_address = Web3.toChecksumAddress("0x3C3c87dF5d470d77658784f55212c33626d91534")
 contract = w3.eth.contract(address=contract_address, abi=abi)
 
+# Step: Find contract creation transaction
+def find_creation_tx(contract_address, start_block=0, end_block='latest'):
+    end_block = w3.eth.block_number if end_block == 'latest' else end_block
+    for block_num in range(start_block, end_block + 1):
+        block = w3.eth.get_block(block_num, full_transactions=True)
+        for tx in block.transactions:
+            if tx.to is None:
+                receipt = w3.eth.get_transaction_receipt(tx.hash)
+                if receipt.contractAddress and receipt.contractAddress.lower() == contract_address.lower():
+                    return tx, receipt, block_num
+    return None, None, None
+
 # Parse .env file to build address->name mapping
 env_file_path = "../src/.env"
 address_name_map = {}
@@ -36,19 +48,28 @@ with open(output_file, mode='w', newline='') as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
 
-    # Track these functions only
-    target_functions = {
-        "setApplicationForm",
-        "setGuaranteeConfirmation",
-        "setLoanRequest",
-        "setGuaranteeClaim",
-        "setRejectPayment",
-        "setAllowPayment",
-        "setGuaranteeClaimGuarantor"
-    }
+    # Write contract creation transaction
+    creation_tx, creation_receipt, creation_block = find_creation_tx(contract_address)
+    if creation_tx:
+        creator = creation_tx["from"].lower()
+        creator_name = address_name_map.get(creator, "UNKNOWN")
+        writer.writerow({
+            "tx_block_number": creation_block,
+            "tx_hash": creation_tx.hash.hex(),
+            "tx_from": creation_tx["from"],
+            "sender_name": creator_name,
+            "tx_to": "",  # no "to" for creation
+            "tx_value_ether": w3.fromWei(creation_tx["value"], "ether"),
+            "tx_gas": creation_tx["gas"],
+            "tx_gas_price_wei": creation_tx["gasPrice"],
+            "tx_gas_used": creation_receipt.gasUsed,
+            "function_name": "ContractCreation"
+        })
+        print(f"Contract creation found in block {creation_block} with tx: {creation_tx.hash.hex()}")
 
+    # Scan and decode function calls to the contract
     latest_block = w3.eth.block_number
-    print(f"Scanning blocks 0 to {latest_block} for transactions to contract {contract_address}...\n")
+    print(f"Scanning blocks 0 to {latest_block} for interactions with {contract_address}...")
 
     for block_number in range(latest_block + 1):
         block = w3.eth.get_block(block_number, full_transactions=True)
@@ -64,8 +85,6 @@ with open(output_file, mode='w', newline='') as csvfile:
                 sender = tx["from"].lower()
                 sender_name = address_name_map.get(sender, "UNKNOWN")
 
-                print(f"Block {block_number} | Tx: {tx.hash.hex()} | From: {sender_name} | Function: {func_name}")
-
                 writer.writerow({
                     "tx_block_number": block_number,
                     "tx_hash": tx.hash.hex(),
@@ -79,4 +98,4 @@ with open(output_file, mode='w', newline='') as csvfile:
                     "function_name": func_name,
                 })
 
-print(f"\n Decoded transaction data saved to: {output_file}")
+print(f"Decoded transaction data saved to: {output_file}")
